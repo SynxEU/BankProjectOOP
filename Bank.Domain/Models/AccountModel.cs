@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Bank.Domain.Models
 {
-    internal class AccountModel
+    public class AccountModel
     {
+        public int AccountNumber { get; set; }
+        public int TitleID { get; set; }
+        public int balance { get; set; }
+        public int InterestRate { get; set; }
     }
 }

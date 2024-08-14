@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace Bank.Domain.Models
 {
-    internal class UserModel
+    public class UserModel
     {
+        public int Id { get; set; }
+        public string? Name { get; set; }
+        public int Age { get; set; }
+        public string? Email { get; set; }
+        public string? Password { get; set; }
+        public DateTime RegistrationDate { get; set; }
     }
 }
