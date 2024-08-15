@@ -1,10 +1,5 @@
 ﻿using Bank.Domain.Models;
 using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bank.Domain.Connections
 {
@@ -122,6 +117,11 @@ namespace Bank.Domain.Connections
         #endregion
 
         #region Get user by ID
+        /// <summary>
+        /// Gets user details from id
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>User details</returns>
         public UserModel GetUserById(UserModel user)
         {
             SqlCommand cmd = _sql.Execute("sp_GetUserByID");
