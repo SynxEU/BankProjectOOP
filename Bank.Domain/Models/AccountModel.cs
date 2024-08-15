@@ -10,7 +10,7 @@ namespace Bank.Domain.Models
     {
         public int AccountNumber { get; set; }
         public int TitleID { get; set; }
-        public int balance { get; set; }
-        public int InterestRate { get; set; }
+        public int Balance { get; set; }
+        public Decimal InterestRate { get; set; }
     }
 }
