@@ -17,8 +17,8 @@ namespace Bank.Service.Methods
             _accountConnection = new Accounts();
         }
 
-        public bool CreateAccount(AccountModel account)
-            => _accountConnection.CreateAccount(account);
+        public bool CreateAccount(AccountModel account, int userId)
+            => _accountConnection.CreateAccount(account, userId);
         public bool DeleteAccount(AccountModel account)
             => _accountConnection.DeleteAccount(account);
         public List<AccountModel> GetAllAccounts()

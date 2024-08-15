@@ -17,17 +17,34 @@ namespace Bank.Domain.Connections
         /// </summary>
         /// <param name="account"></param>
         /// <returns>True if successful, false if not</returns>
-        public bool CreateAccount(AccountModel account)
+        public bool CreateAccount(AccountModel account, int userId)
         {
             SqlCommand cmd = _sql.Execute("sp_CreateAccount");
+            SqlCommand cmd2 = _sql.Execute("sp_CreateAccountUserShip");
             cmd.Parameters.AddWithValue("TitleID", account.TitleID);
+            switch (account.TitleID)
+            {
+                case 0:
+                    account.InterestRate = 1.005;
+                    break;
+                case 1:
+                    account.InterestRate = 1.01;
+                    break;
+                case 2:
+                    account.InterestRate = 1.001;
+                    break;
+                default:
+                    break;
+            }
             cmd.Parameters.AddWithValue("Interest", account.InterestRate);
+            cmd2.Parameters.AddWithValue("UserId", userId);
 
             try
             {
                 cmd.Connection.Open();
-                int rowsAffected = cmd.ExecuteNonQuery();
-                return rowsAffected > 0;
+                cmd2.Connection.Open();
+                int rowsAffected = cmd.ExecuteNonQuery(), rowsAffected2 = cmd2.ExecuteNonQuery();
+                return rowsAffected > 0 && rowsAffected2 > 0;
             }
             catch (SqlException ex)
             {
@@ -36,6 +53,7 @@ namespace Bank.Domain.Connections
             finally
             {
                 cmd.Connection.Close();
+                cmd2.Connection.Close();
             }
 
             return false;
@@ -96,7 +114,7 @@ namespace Bank.Domain.Connections
                         AccountNumber = reader.GetInt32(0),
                         TitleID = reader.GetInt32(1),
                         Balance = reader.GetInt32(2),
-                        InterestRate = reader.GetDecimal(3)
+                        InterestRate = reader.GetDouble(3)
                     });
                 }
                 return account;
@@ -136,7 +154,7 @@ namespace Bank.Domain.Connections
                     account.AccountNumber = reader.GetInt32(0);
                     account.TitleID = reader.GetInt32(1);
                     account.Balance = reader.GetInt32(2);
-                    account.InterestRate = reader.GetDecimal(3);
+                    account.InterestRate = reader.GetDouble(3);
                 }
                 return account;
             }
@@ -193,7 +211,7 @@ namespace Bank.Domain.Connections
                             AccountNumber = reader.GetInt32(0),
                             TitleID = reader.GetInt32(1),
                             Balance = reader.GetInt32(2),
-                            InterestRate = reader.GetDecimal(3)
+                            InterestRate = reader.GetDouble(3)
                         });
                     }
                     return account;

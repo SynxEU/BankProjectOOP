@@ -23,6 +23,8 @@ namespace Bank.Service.Methods
             => _user.DeleteUser(user);
         public List<UserModel> GetAllUsers()
             => _user.GetAllUsers();
+        public UserModel GetUserByMail(string mail)
+            => _user.GetUserByMail(mail);
         public UserModel GetUserById(UserModel user)
             => _user.GetUserById(user);
         public UserModel UserLogin(UserModel user)

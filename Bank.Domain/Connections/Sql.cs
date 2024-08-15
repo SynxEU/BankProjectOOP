@@ -27,6 +27,7 @@ namespace Bank.Domain.Connections
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", false, true);
             _configuration = builder.Build();
+            //C:\Users\jonas\source\repos\Bank\Bank\appsettings.json
             _connectionString = _configuration["ConnectionStrings:Default"];
         }
 

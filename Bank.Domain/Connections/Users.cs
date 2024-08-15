@@ -155,6 +155,48 @@ namespace Bank.Domain.Connections
         }
         #endregion
 
+        #region Get User By Mail
+        /// <summary>
+        /// Gets user by their mail
+        /// </summary>
+        /// <param name="mail"></param>
+        /// <returns>UserDetails if mail fits</returns>
+        public UserModel GetUserByMail(string mail)
+        {
+            UserModel user = new UserModel();
+
+            SqlCommand cmd = _sql.Execute("sp_GetUserByMail");
+            cmd.Parameters.AddWithValue("Mail", mail);
+
+            try
+            {
+                cmd.Connection.Open();
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    user.Id = reader.GetInt32(0);
+                    user.Name = reader.GetString(1);
+                    user.Age = reader.GetInt32(2);
+                    user.Email = mail;
+                    user.RegistrationDate = reader.GetDateTime(5);
+                }
+                return user;
+            }
+            catch (SqlException ex)
+            {
+                Console.Out.WriteLine(ex.Message);
+            }
+            finally
+            {
+                cmd.Connection.Close();
+            }
+
+            return null;
+        }
+        #endregion
+
         #region User login
         /// <summary>
         /// Loggin in
@@ -172,6 +214,8 @@ namespace Bank.Domain.Connections
 
             try
             {
+                cmd.Connection.Open();
+
                 cmd.ExecuteNonQuery();
                 SqlDataReader reader = cmd.ExecuteReader();
 
@@ -181,9 +225,12 @@ namespace Bank.Domain.Connections
                     switch (result)
                     {
                         case "Login successful":
-                            user.Id = reader.GetInt32(0);
-                            user.Name = reader.GetString(1);
-                            user.Age = reader.GetInt32(2);
+                            if (reader.NextResult() && reader.Read())
+                            {
+                                user.Id = reader.GetInt32(0);
+                                user.Name = reader.GetString(1);
+                                user.Age = reader.GetInt32(2);
+                            }
                             break;
                         case "Login failed":
                             return null;
