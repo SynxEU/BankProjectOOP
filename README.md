@@ -30,6 +30,9 @@ EUC Bank Project
 
 #### v1.0.0:
 
+#### v0.0.35
+* Fixed the placement of ReadMe.md
+
 #### v0.0.3
 * Signup ✓
 * Login ✓
