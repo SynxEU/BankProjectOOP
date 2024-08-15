@@ -21,6 +21,20 @@ namespace Bank.Domain.Connections
         {
             SqlCommand cmd = _sql.Execute("sp_CreateAccount");
             cmd.Parameters.AddWithValue("TitleID", account.TitleID);
+            switch (account.TitleID)
+            {
+                case 0:
+                    account.InterestRate = 1.005;
+                    break;
+                case 1:
+                    account.InterestRate = 1.01;
+                    break;
+                case 2:
+                    account.InterestRate = 1.001;
+                    break;
+                default:
+                    break;
+            }
             cmd.Parameters.AddWithValue("Interest", account.InterestRate);
 
             try
