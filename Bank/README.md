@@ -29,7 +29,8 @@ EUC Bank Project
 
 #### v1:
 
-#### v0.0.0
+#### v0.0.2
+* Bank services (Interfaces & Methods) ✓
 
 #### v0.0.1
 * Connections ✓
@@ -38,7 +39,6 @@ EUC Bank Project
 
 # To-do
 
-* Interfaces And Methods
 * More Accounts per user
 * Interest rates
 * Logger
