@@ -4,8 +4,8 @@ EUC Bank Project
 ~ By Synx
 
 ## Table of content
-* [Change Log](##Changelog)
-* [Known Issues](##Issues)
+* [Change Log](#Changelog)
+* [Known Issues](#Issues)
 
 ## Intro
 
