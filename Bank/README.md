@@ -14,7 +14,7 @@ EUC Bank Project
 
 | Platform      |    Language   | projectVersion| 
 | ------------- | ------------- | ------------- |
-|    Insert    |    C# & Transact-SQL |       v0.0.0     |
+|    Insert    |    C# & Transact-SQL |       v0.0.3     |
 | ------------- | ------------- | ------------- |
 
 ## Tags
@@ -24,10 +24,20 @@ EUC Bank Project
 [Github](https://github.com/SynxEU/BankProjectOOP/commits/master/)
 
 ## Issues
+* Account creations messed up do to mistakes made when coding stored procedures
 
-### V0 til V1:
+## V0.0.0 til V1.0.0:
 
-#### v1:
+#### v1.0.0:
+
+#### v0.0.3
+* Signup ✓
+* Login ✓
+* Added Get user by mail ✓
+* Added fixed interest rates ✓
+* Added Bank menu ✓
+* Account creation -
+* Fixed mistakes made in last version
 
 #### v0.0.2
 * Bank services (Interfaces & Methods) ✓
@@ -40,7 +50,7 @@ EUC Bank Project
 # To-do
 
 * More Accounts per user
-* Interest rates
+* Dynamic interest rates
 * Logger
-* Bank menu
+* Implement the rest of the menu items
 

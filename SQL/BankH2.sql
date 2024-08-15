@@ -74,7 +74,7 @@ CREATE OR ALTER PROCEDURE sp_CreateUser
 AS
 Begin
 	DECLARE @HashedPassword VARBINARY(64) = HASHBYTES('SHA2_256', @Password);
-	DECLARE @Date DATE = FORMAT (getutcdate(), 'dd-MM-yyyy');
+	DECLARE @Date DATE = CONVERT(DATE, getutcdate());
 	INSERT INTO [UserTable]
 	([Name], [Age], [E-Mail], [Password], [Registration Date]) 
 	VALUES 
@@ -124,7 +124,7 @@ BEGIN
     IF HASHBYTES('SHA2_256', @Password) = @StoredHashedPassword
 	BEGIN
         SELECT 'Login successful' AS Result;
-		SELECT * FROM [UserTable]
+		SELECT * FROM [UserTable] WHERE [E-Mail] = @Mail 
     END
     ELSE
     BEGIN

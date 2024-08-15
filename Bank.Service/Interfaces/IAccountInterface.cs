@@ -9,7 +9,7 @@ namespace Bank.Service.Interfaces
 {
     public interface IAccountInterface
     {
-        bool CreateAccount(AccountModel account);
+        bool CreateAccount(AccountModel account, int userId);
         bool DeleteAccount(AccountModel account);
         List<AccountModel> GetAllAccounts();
         AccountModel GetAccountByNumber(AccountModel account);
