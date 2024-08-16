@@ -1,5 +1,6 @@
 ﻿using Bank.Domain.Connections;
 using Bank.Domain.Models;
+using Bank.Service.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Bank.Service.Methods
 {
-    public class AccountMethod
+    public class AccountMethod :IAccountInterface
     {
         Accounts _accountConnection;
 

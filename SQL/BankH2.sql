@@ -37,8 +37,8 @@ CREATE TABLE UserTable (
 CREATE TABLE AccountTable (
 	[Account Number] INT IDENTITY PRIMARY KEY,
 	[TitleID] INT NOT NULL,
-	[Balance] INT DEFAULT 0,
-	[Interest Rate] INT DEFAULT 0
+	[Balance] DECIMAL DEFAULT 0,
+	[Interest Rate] DECIMAL DEFAULT 0
 )
 CREATE TABLE AccountsToUser (
 	[User ID] INT,

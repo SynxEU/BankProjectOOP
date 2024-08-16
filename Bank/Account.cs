@@ -19,5 +19,10 @@ namespace Bank
         { 
             return _accounts.CreateAccount(account, userId);
         }
+
+        public List<AccountModel> Accounts(int userId)
+        {
+            return _accounts.GetAccountsAtUsers(userId);
+        }
     }
 }

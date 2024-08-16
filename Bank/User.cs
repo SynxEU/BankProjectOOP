@@ -30,5 +30,11 @@ namespace Bank
         {
             return _user.GetUserByMail(mail);
         }
+
+        public UserModel GetUserById(int id)
+        {
+            UserModel user = new UserModel();
+            return _user.GetUserById(user);
+        }
     }
 }

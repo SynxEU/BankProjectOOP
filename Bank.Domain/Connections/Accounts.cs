@@ -25,13 +25,13 @@ namespace Bank.Domain.Connections
             switch (account.TitleID)
             {
                 case 0:
-                    account.InterestRate = 1.005;
+                    account.InterestRate = 1.005M;
                     break;
                 case 1:
-                    account.InterestRate = 1.01;
+                    account.InterestRate = 1.01M;
                     break;
                 case 2:
-                    account.InterestRate = 1.001;
+                    account.InterestRate = 1.001M;
                     break;
                 default:
                     break;
@@ -113,8 +113,8 @@ namespace Bank.Domain.Connections
                     {
                         AccountNumber = reader.GetInt32(0),
                         TitleID = reader.GetInt32(1),
-                        Balance = reader.GetInt32(2),
-                        InterestRate = reader.GetDouble(3)
+                        Balance = reader.GetDecimal(2),
+                        InterestRate = reader.GetDecimal(3)
                     });
                 }
                 return account;
@@ -153,8 +153,8 @@ namespace Bank.Domain.Connections
                 {
                     account.AccountNumber = reader.GetInt32(0);
                     account.TitleID = reader.GetInt32(1);
-                    account.Balance = reader.GetInt32(2);
-                    account.InterestRate = reader.GetDouble(3);
+                    account.Balance = reader.GetDecimal(2);
+                    account.InterestRate = reader.GetDecimal(3);
                 }
                 return account;
             }
@@ -182,11 +182,12 @@ namespace Bank.Domain.Connections
             SqlCommand cmd = _sql.Execute("sp_GetAccountsByUserID");
             cmd.Parameters.AddWithValue("UserId", userId);
 
+            List<AccountModel> accountsUsers = new List<AccountModel>();
+
             try
             {
                 cmd.Connection.Open();
                 SqlDataReader dr = cmd.ExecuteReader();
-                List<AccountModel> accountsUsers = new List<AccountModel>();
 
                 while (dr.Read())
                 {
@@ -195,38 +196,43 @@ namespace Bank.Domain.Connections
                         AccountNumber = dr.GetInt32(1)
                     });
                 }
+                dr.Close();
 
-                foreach (AccountModel accounts in accountsUsers)
+                List<AccountModel> fullAccountDetails = new List<AccountModel>();
+
+                foreach (AccountModel account in accountsUsers)
                 {
                     SqlCommand cmd2 = _sql.Execute("sp_GetAccountByNumber");
-                    cmd2.Parameters.AddWithValue("AccountNumber", accounts.AccountNumber);
+                    cmd2.Parameters.AddWithValue("@AccountNumber", account.AccountNumber);
 
+                    cmd2.Connection.Open();
                     SqlDataReader reader = cmd2.ExecuteReader();
-                    List<AccountModel> account = new List<AccountModel>();
 
                     while (reader.Read())
                     {
-                        account.Add(new AccountModel()
+                        fullAccountDetails.Add(new AccountModel()
                         {
                             AccountNumber = reader.GetInt32(0),
                             TitleID = reader.GetInt32(1),
-                            Balance = reader.GetInt32(2),
-                            InterestRate = reader.GetDouble(3)
+                            Balance = reader.GetDecimal(2),
+                            InterestRate = reader.GetDecimal(3)
                         });
                     }
-                    return account;
+
+                    reader.Close();
                 }
+
+                return fullAccountDetails;
             }
             catch (SqlException ex)
             {
                 Console.Out.WriteLine(ex.Message);
+                return null;
             }
             finally
             {
                 cmd.Connection.Close();
             }
-
-            return null;
         }
         #endregion
 
